@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import Aux from '../../hoc/_Aux';
+import Aux from '../../hoc/_Aux/_Aux';
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/Burger/BuildControls/BuildControls';
 import Modal from '../../components/UI/Modal/Modal';
@@ -48,8 +48,8 @@ class BurgerBuilder extends Component {
     const oldCount = this.state.ingredients[type];
     const updatedIngredients = {
       ...this.state.ingredients,
-      ...(this.state.ingredients[type] = oldCount + 1),
     };
+    updatedIngredients[type] = oldCount + 1;
     const priceAddition = INGREDIENT_PRICES[type];
     const oldPrice = this.state.totalPrice;
     const newPrice = oldPrice + priceAddition;
