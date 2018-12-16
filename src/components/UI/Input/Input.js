@@ -3,19 +3,35 @@ import PropTypes from 'prop-types';
 
 import classes from './Input.css';
 
-const input = ({ elementType, elementConfig, value, label }) => {
+const input = ({ elementType, elementConfig, value, label, changed }) => {
   let inputElement = null;
 
   switch (elementType) {
     case 'input':
-      inputElement = <input className={classes.InputElement} {...elementConfig} value={value} />;
+      inputElement = (
+        <input
+          className={classes.InputElement}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
+        />
+      );
       break;
+
     case 'textarea':
-      inputElement = <textarea className={classes.InputElement} {...elementConfig} value={value} />;
+      inputElement = (
+        <textarea
+          className={classes.InputElement}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
+        />
+      );
       break;
+
     case 'select':
       inputElement = (
-        <select className={classes.InputElement} value={value}>
+        <select className={classes.InputElement} value={value} onChange={changed}>
           {elementConfig.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
@@ -24,8 +40,16 @@ const input = ({ elementType, elementConfig, value, label }) => {
         </select>
       );
       break;
+
     default:
-      inputElement = <input className={classes.InputElement} {...elementConfig} value={value} />;
+      inputElement = (
+        <input
+          className={classes.InputElement}
+          {...elementConfig}
+          value={value}
+          onChange={changed}
+        />
+      );
       break;
   }
 
@@ -41,7 +65,8 @@ input.propTypes = {
   label: PropTypes.string,
   elementType: PropTypes.string,
   elementConfig: PropTypes.object,
-  value: PropTypes.string,
+  value: PropTypes.string.isRequired,
+  changed: PropTypes.func.isRequired,
 };
 
 export default input;
