@@ -13,6 +13,17 @@ const input = ({ elementType, elementConfig, value, label }) => {
     case 'textarea':
       inputElement = <textarea className={classes.InputElement} {...elementConfig} value={value} />;
       break;
+    case 'select':
+      inputElement = (
+        <select className={classes.InputElement} value={value}>
+          {elementConfig.options.map((option) => (
+            <option key={option.value} value={option.value}>
+              {option.displayValue}
+            </option>
+          ))}
+        </select>
+      );
+      break;
     default:
       inputElement = <input className={classes.InputElement} {...elementConfig} value={value} />;
       break;
