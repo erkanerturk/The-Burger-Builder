@@ -3,24 +3,24 @@ import PropTypes from 'prop-types';
 
 import classes from './Input.css';
 
-const input = (props) => {
+const input = ({ elementType, elementConfig, value, label }) => {
   let inputElement = null;
 
-  switch (props.inputtype) {
+  switch (elementType) {
     case 'input':
-      inputElement = <input className={classes.InputElement} {...props} />;
+      inputElement = <input className={classes.InputElement} {...elementConfig} value={value} />;
       break;
     case 'textarea':
-      inputElement = <textarea className={classes.InputElement} {...props} />;
+      inputElement = <textarea className={classes.InputElement} {...elementConfig} value={value} />;
       break;
     default:
-      inputElement = <input className={classes.InputElement} {...props} />;
+      inputElement = <input className={classes.InputElement} {...elementConfig} value={value} />;
       break;
   }
 
   return (
     <div className={classes.Input}>
-      <label className={classes.Label}>{props.label}</label>
+      <label className={classes.Label}>{label}</label>
       {inputElement}
     </div>
   );
@@ -28,7 +28,9 @@ const input = (props) => {
 
 input.propTypes = {
   label: PropTypes.string,
-  inputtype: PropTypes.string,
+  elementType: PropTypes.string,
+  elementConfig: PropTypes.object,
+  value: PropTypes.string,
 };
 
 export default input;
