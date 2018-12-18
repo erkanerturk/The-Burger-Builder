@@ -3,17 +3,20 @@ import PropTypes from 'prop-types';
 
 import classes from './Input.css';
 
-const input = ({ elementType, elementConfig, value, label, changed }) => {
+const input = (props) => {
   let inputElement = null;
+  let inputClasses = [classes.InputElement];
 
-  switch (elementType) {
+  if (props.invalid && props.shouldValidate && props.touched) inputClasses.push(classes.Invalid);
+
+  switch (props.elementType) {
     case 'input':
       inputElement = (
         <input
-          className={classes.InputElement}
-          {...elementConfig}
-          value={value}
-          onChange={changed}
+          className={inputClasses.join(' ')}
+          {...props.elementConfig}
+          value={props.value}
+          onChange={props.changed}
         />
       );
       break;
@@ -21,18 +24,18 @@ const input = ({ elementType, elementConfig, value, label, changed }) => {
     case 'textarea':
       inputElement = (
         <textarea
-          className={classes.InputElement}
-          {...elementConfig}
-          value={value}
-          onChange={changed}
+          className={inputClasses.join(' ')}
+          {...props.elementConfig}
+          value={props.value}
+          onChange={props.changed}
         />
       );
       break;
 
     case 'select':
       inputElement = (
-        <select className={classes.InputElement} value={value} onChange={changed}>
-          {elementConfig.options.map((option) => (
+        <select className={inputClasses.join(' ')} value={props.value} onChange={props.changed}>
+          {props.elementConfig.options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.displayValue}
             </option>
@@ -44,10 +47,10 @@ const input = ({ elementType, elementConfig, value, label, changed }) => {
     default:
       inputElement = (
         <input
-          className={classes.InputElement}
-          {...elementConfig}
-          value={value}
-          onChange={changed}
+          className={inputClasses.join(' ')}
+          {...props.elementConfig}
+          value={props.value}
+          onChange={props.changed}
         />
       );
       break;
@@ -55,7 +58,7 @@ const input = ({ elementType, elementConfig, value, label, changed }) => {
 
   return (
     <div className={classes.Input}>
-      <label className={classes.Label}>{label}</label>
+      <label className={classes.Label}>{props.label}</label>
       {inputElement}
     </div>
   );
@@ -64,8 +67,11 @@ const input = ({ elementType, elementConfig, value, label, changed }) => {
 input.propTypes = {
   label: PropTypes.string,
   elementType: PropTypes.string,
-  elementConfig: PropTypes.object,
+  elementConfig: PropTypes.object.isRequired,
   value: PropTypes.string.isRequired,
+  invalid: PropTypes.bool.isRequired,
+  shouldValidate: PropTypes.object,
+  touched: PropTypes.bool,
   changed: PropTypes.func.isRequired,
 };
 
